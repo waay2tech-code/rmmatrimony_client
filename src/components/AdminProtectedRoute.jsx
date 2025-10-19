@@ -15,7 +15,7 @@ const AdminProtectedRoute = ({ children }) => {
   }
 
   if (!user) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/admin/Suji1972$$" replace />;
   }
 
   const userType = (user.userType || user.usertype || user.user_type || user.role || "").toString().toLowerCase();

@@ -139,6 +139,7 @@ const Profile = () => {
 
     if (type === "file" && name === "profilePhoto") {
       const file = files[0];
+      console.log("📁 File selected:", file);
       // Check if file exists and is a valid file object
       if (file && file instanceof File) {
         // Validate file type
@@ -153,6 +154,7 @@ const Profile = () => {
           return;
         }
         
+        console.log("✅ File validation passed, setting form data");
         setForm((prev) => ({ ...prev, profilePhoto: file }));
         if (profilePreview) URL.revokeObjectURL(profilePreview);
         setProfilePreview(URL.createObjectURL(file));
@@ -223,12 +225,35 @@ const Profile = () => {
 
     try {
       setIsLoading(true);
-      await userService.updateProfile(formData);
+      console.log("📤 Uploading profile with photo:", form.profilePhoto);
+      const response = await userService.updateProfile(formData);
+      console.log("✅ Profile update response:", response);
+      
+      // ✅ Refetch profile data to get updated photo URL
+      // Add a small delay to ensure server has processed the file
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const updatedProfile = await userService.getProfile();
+      const { profile } = updatedProfile;
+      console.log("🔄 Refetched profile:", profile);
+      
+      // Update form with fresh data from server
+      setForm(prev => ({
+        ...prev,
+        profilePhoto: profile.profilePhoto || null
+      }));
+      
+      // Clear preview since we now have the actual photo URL
+      if (profilePreview && profilePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(profilePreview);
+        setProfilePreview(null);
+      }
+      
       setSuccessMessage("Profile saved successfully");
       setTimeout(() => setSuccessMessage(""), 3000);
       setErrors({});
     } catch (error) {
-      console.error(error);
+      console.error("❌ Profile update error:", error);
       setErrors({
         submit: error.response?.data?.message || "Failed to save profile. Please try again."
       });
@@ -300,7 +325,7 @@ const Profile = () => {
       <div className="mb-6 text-center">
         <div className="relative inline-block">
           <img 
-            src={getProfileImageUrl(profilePreview, form.gender, form.name)}
+            src={getProfileImageUrl(form.profilePhoto || profilePreview, form.gender, form.name)}
             alt="Profile Preview" 
             className="mx-auto h-32 w-32 rounded-full object-cover border-2 border-red-500"
             onError={(e) => {

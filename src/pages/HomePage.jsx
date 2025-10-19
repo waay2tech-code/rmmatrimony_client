@@ -108,7 +108,7 @@ const HomePage = () => {
             {[
               ["200+", "Active Members"],
               ["40+", "Success Stories"],
-              ["500+", "Daily Matches"],
+              ["20+", "Daily Matches"],
               ["98%", "Satisfaction Rate"],
             ].map(([value, label], i) => (
               <motion.div key={i} variants={item} className="p-4">
@@ -436,7 +436,7 @@ const HomePage = () => {
             <div className="lg:col-span-2">
               <h3 className="text-2xl font-bold mb-4">RM Matrimony</h3>
               <p className="text-gray-400 mb-6 max-w-md">
-                India's most trusted matrimony platform with verified profiles and advanced matching technology. Helping you find your perfect life partner.
+                South Tamil Nadu's most trusted christian matrimony platform with verified profiles and advanced matching technology. Helping you find your perfect life partner.
               </p>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com/profile.php?id=61555915692275" className="bg-gray-800 p-2 rounded-full hover:bg-red-600 transition">
@@ -488,7 +488,7 @@ const HomePage = () => {
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
-                  <span> rmmatrimony2024@gmail.com</span>
+                  <span> support@rmmatrimony.co.in</span>
                 </li>
                 <li className="flex items-start">
                   <svg className="h-5 w-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">

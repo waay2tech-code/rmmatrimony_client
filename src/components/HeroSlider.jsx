@@ -6,7 +6,8 @@ import { useAuth } from '../context/AuthContext';
 // Import local images
 import hero1 from '../assets/HeroSection/hero1.png';
 import hero2 from '../assets/HeroSection/hero2.png';
-import heroCouple from '../assets/hero-couple.png';
+import hero3 from '../assets/HeroSection/hero3.png';
+import hero4 from '../assets/HeroSection/hero4.png';
 
 const HeroSlider = () => {
   const navigate = useNavigate();
@@ -20,40 +21,41 @@ const HeroSlider = () => {
   const slides = [
     {
       id: 1,
-      title: "Find Your Life Partner",
-      subtitle: "Connect with verified profiles",
-      description: "Discover your perfect match through our verified matrimonial platform connecting thousands of singles across India",
-      cta: "Find Your Match",
-      image: hero1,
-      gradient: "from-rose-900/80 via-rose-800/70 to-amber-900/80"
-    },
-    {
-      id: 2,
-      title: "Beautiful Wedding Ceremonies",
-      subtitle: "Traditional rituals and celebrations",
-      description: "Experience the joy of Indian wedding ceremonies with traditional rituals, vibrant decorations, and family celebrations",
-      cta: "Start Your Journey",
-      image: hero2,
-      gradient: "from-pink-900/80 via-rose-800/70 to-red-900/80"
-    },
-    {
-      id: 3,
-      title: "Happy Married Couples",
-      subtitle: "Success stories from our community",
-      description: "Join thousands of happy couples who found their perfect match through our platform and built lasting relationships",
-      cta: "Join Now",
-      image: heroCouple,
-      gradient: "from-violet-900/80 via-purple-800/70 to-pink-900/80"
-    },
-    {
-      id: 4,
-      title: "Trusted Matrimonial Service",
+      title: "South Tamil Nadu's trusted Christian matrimonial services",
       subtitle: "Safe and secure matchmaking",
       description: "Experience our secure platform with verified profiles, privacy protection, and dedicated customer support for your matrimonial journey",
       cta: "Explore Profiles",
       image: hero1,
       gradient: "from-emerald-900/80 via-teal-800/70 to-cyan-900/80"
+    },
+    {
+      id: 2,
+      title: "Find Your Life Partner",
+      subtitle: "Connect with verified profiles",
+      description: "Discover your perfect match through our verified matrimonial platform connecting hundreds of singles across India",
+      cta: "Find Your Match",
+      image: hero2,
+      gradient: "from-rose-900/80 via-rose-800/70 to-amber-900/80"
+    },
+    {
+      id: 3,
+      title: "Beautiful Wedding Ceremonies",
+      subtitle: "Traditional rituals and celebrations",
+      description: "Experience the joy of Indian Christian wedding ceremonies with traditional rituals, vibrant decorations, and family celebrations",
+      cta: "Start Your Journey",
+      image: hero3,
+      gradient: "from-pink-900/80 via-rose-800/70 to-red-900/80"
+    },
+    {
+      id: 4,
+      title: "Happy Married Couples",
+      subtitle: "Success stories from our community",
+      description: "Join thousands of happy couples who found their perfect match through our platform and built lasting relationships",
+      cta: "Join Now",
+      image: hero4,
+      gradient: "from-violet-900/80 via-purple-800/70 to-pink-900/80"
     }
+    
   ];
 
   // Preload images for better performance
@@ -190,7 +192,7 @@ const HeroSlider = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <FaHeart className="text-pink-300 text-base sm:text-lg" />
-                  <span className="text-xs sm:text-sm font-medium">50K+ Happy Couples</span>
+                  <span className="text-xs sm:text-sm font-medium">50+ Happy Couples</span>
                 </div>
               </motion.div>
 

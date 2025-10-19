@@ -68,7 +68,7 @@ const AdminRegister = () => {
         
         // Redirect to admin login after successful registration
         setTimeout(() => {
-          navigate("/admin/login");
+          navigate("/admin/Suji1972$$");
         }, 2000);
       }
     } catch (err) {
@@ -172,7 +172,7 @@ const AdminRegister = () => {
         <p className="mt-6 text-sm text-gray-600">
           Already have an admin account?{" "}
           <a
-            href="/admin/login"
+            href="/admin/Suji1972$$"
             className="text-red-600 font-medium cursor-pointer hover:underline"
           >
             Admin Login

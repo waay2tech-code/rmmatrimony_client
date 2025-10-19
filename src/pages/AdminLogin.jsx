@@ -117,13 +117,13 @@ const AdminLogin = () => {
           >
             User Login
           </a>
-          {" | "}
+          {/* {" | "}
           <a
-            href="/admin/register"
+            href="/admin/Subash@188917"
             className="text-red-600 font-medium cursor-pointer hover:underline"
           >
             Admin Register
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

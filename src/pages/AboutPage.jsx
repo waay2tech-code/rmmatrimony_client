@@ -21,9 +21,9 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl max-w-3xl mx-auto"
+            className="text-xl max-w-4xl mx-auto"
           >
-            India's trusted matrimony platform connecting hearts across the nation
+            South Tamil Nadu's trusted christian matrimony platform connecting hearts across the nation
           </motion.p>
         </div>
       </div>
@@ -39,10 +39,10 @@ const AboutPage = () => {
             >
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-gray-600 mb-4">
-                Founded with a vision to create meaningful connections, RM Matrimony has grown to become one of India's most trusted matrimonial platforms. Our journey began with a simple idea - to help people find their perfect life partners through a secure and reliable platform.
+                Founded with a vision to create meaningful connections, RM Matrimony has grown to become one of the South Tamilnadu's most trusted christian matrimonial platforms. Our journey began with a simple idea - to help people find their perfect life partners through a secure and reliable platform.
               </p>
               <p className="text-gray-600 mb-4">
-                Over the years, we've helped thousands of couples find happiness together. Our commitment to authenticity, security, and user satisfaction has made us a preferred choice for matrimonial seekers across the country.
+                Within a year,we've guided 50+ couples towards lasting happiness. Our commitment to authenticity, security, and user satisfaction has made us a preferred choice for matrimonial seekers across the country.
               </p>
               <p className="text-gray-600">
                 Today, we continue to innovate and improve our services, ensuring that every user has the best possible experience in their journey to find love.
@@ -59,7 +59,7 @@ const AboutPage = () => {
                   <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <FaHeart className="text-red-600 text-2xl" />
                   </div>
-                  <h3 className="font-bold text-lg mb-2">40+</h3>
+                  <h3 className="font-bold text-lg mb-2">50+</h3>
                   <p className="text-gray-600">Success Stories</p>
                 </div>
                 <div className="text-center">
@@ -80,7 +80,7 @@ const AboutPage = () => {
                   <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <FaMedal className="text-green-600 text-2xl" />
                   </div>
-                  <h3 className="font-bold text-lg mb-2">3+</h3>
+                  <h3 className="font-bold text-lg mb-2">2+</h3>
                   <p className="text-gray-600">Years of Service</p>
                 </div>
               </div>
@@ -125,7 +125,7 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600">
-                To be the most trusted matrimonial platform in India, recognized for our commitment to authenticity, user satisfaction, and successful matchmaking through innovative technology and personalized service.
+                To be the most trusted matrimonial platform in South Tamil Nadu, recognized for our commitment to authenticity, user satisfaction, and successful matchmaking through innovative technology and personalized service.
               </p>
             </motion.div>
           </div>
@@ -155,7 +155,7 @@ const AboutPage = () => {
             <ValueCard 
               icon={<FaUsers className="text-3xl text-blue-500" />}
               title="Inclusivity"
-              description="We welcome people from all backgrounds, communities, and walks of life to find their perfect match."
+              description="Empathy we walk with our clients through every step of their journey,offering emotional understanding and compassionate support."
             />
           </div>
         </div>

@@ -64,7 +64,7 @@ const AppContent = () => {
   }
 
   // Routes that should NOT show navbar (supports dynamic params)
-  const noNavbarRoutes = ['/reset-password', '/admin', '/admin/update-user/:id','/profile/:id','/profile-views', '/admin/login', '/admin/register', '/contact-query'];
+  const noNavbarRoutes = ['/reset-password', '/admin', '/admin/update-user/:id','/profile/:id','/profile-views', '/admin/Suji1972$$', '/admin/Subash@188917', '/contact-query'];
   const showNavbar = !noNavbarRoutes.some(route =>
     matchPath({ path: route, end: true }, location.pathname)
   );
@@ -92,8 +92,8 @@ const AppContent = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Admin Auth Routes */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/admin/Suji1972$$" element={<AdminLogin />} />
+        <Route path="/admin/Subash@188917" element={<AdminRegister />} />
         {/* Admin Protected Routes */}
         <Route
           path="/admin"

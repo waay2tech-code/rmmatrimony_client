@@ -100,7 +100,7 @@ const ForgotPassword = ({ onClose, onBackToLogin }) => {
               <h4 className="font-medium mb-2">What to do next:</h4>
               <ul className="space-y-1">
                 <li className="text-xs sm:text-sm">• Check your email inbox (including spam folder)</li>
-                <li className="text-xs sm:text-sm">• <strong>For development:</strong> Check the server console for the reset link</li>
+                <li className="text-xs sm:text-sm">• <strong>Inbox or Spam folder:</strong> Check the reset link in your inbox or spam folder</li>
                 <li className="text-xs sm:text-sm">• Click the reset link within 30 minutes</li>
                 <li className="text-xs sm:text-sm">• Follow the instructions to create a new password</li>
               </ul>
