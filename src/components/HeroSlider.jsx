@@ -50,7 +50,7 @@ const HeroSlider = () => {
       id: 4,
       title: "Happy Married Couples",
       subtitle: "Success stories from our community",
-      description: "Join thousands of happy couples who found their perfect match through our platform and built lasting relationships",
+      description: "Join 50+ of happy couples who found their perfect match through our platform and built lasting relationships",
       cta: "Join Now",
       image: hero4,
       gradient: "from-violet-900/80 via-purple-800/70 to-pink-900/80"

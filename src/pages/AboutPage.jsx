@@ -16,6 +16,7 @@ const AboutPage = () => {
             className="text-4xl md:text-5xl font-bold mb-6"
           >
             About RM Matrimony
+            <p className="text-xl max-w-3xl mx-auto">Govt.Registered No: TN-09-0041024</p>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -110,7 +111,8 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-gray-600">
-                To provide a secure, trustworthy, and efficient platform that connects compatible individuals seeking lifelong partnerships, fostering meaningful relationships that lead to successful marriages.
+                To connect Christian singles through a secure, faith-based platform guided by Biblical values.
+                To ensure transparency, integrity, and personalized care in every matchmaking journey.
               </p>
             </motion.div>
             <motion.div 
@@ -125,7 +127,7 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600">
-                To be the most trusted matrimonial platform in South Tamil Nadu, recognized for our commitment to authenticity, user satisfaction, and successful matchmaking through innovative technology and personalized service.
+                To be the leading Christian matrimonial service that upholds trust, transparency, and the sanctity of marriage through Christ-centered matchmaking.
               </p>
             </motion.div>
           </div>
@@ -154,8 +156,8 @@ const AboutPage = () => {
             />
             <ValueCard 
               icon={<FaUsers className="text-3xl text-blue-500" />}
-              title="Inclusivity"
-              description="Empathy we walk with our clients through every step of their journey,offering emotional understanding and compassionate support."
+              title="Empathy"
+              description="we walk with our clients through every step of their journey,offering emotional understanding and compassionate support."
             />
           </div>
         </div>

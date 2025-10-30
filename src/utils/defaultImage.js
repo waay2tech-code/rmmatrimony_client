@@ -31,12 +31,22 @@ export const getDefaultProfileImage = (gender, name) => {
 
 /**
  * Gets the appropriate profile image URL with fallback to default
- * @param {string} profilePhoto - The user's profile photo URL
+ * @param {string|File} profilePhoto - The user's profile photo URL or File object
  * @param {string} gender - User's gender
  * @param {string} name - User's name
  * @returns {string} - Complete image URL
  */
 export const getProfileImageUrl = (profilePhoto, gender, name) => {
+  // Handle case where profilePhoto is a File object
+  if (profilePhoto instanceof File) {
+    return URL.createObjectURL(profilePhoto);
+  }
+  
+  // Handle case where profilePhoto is not a string (null, undefined, etc.)
+  if (typeof profilePhoto !== 'string') {
+    return getDefaultProfileImage(gender, name);
+  }
+  
   if (!profilePhoto) {
     return getDefaultProfileImage(gender, name);
   }

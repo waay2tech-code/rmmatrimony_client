@@ -156,7 +156,7 @@ const Profile = () => {
         
         console.log("✅ File validation passed, setting form data");
         setForm((prev) => ({ ...prev, profilePhoto: file }));
-        if (profilePreview) URL.revokeObjectURL(profilePreview);
+        // Don't revoke the previous URL here, do it when we're done with it
         setProfilePreview(URL.createObjectURL(file));
         // Clear any previous errors
         setErrors(prev => ({ ...prev, profilePhoto: null }));
@@ -240,14 +240,14 @@ const Profile = () => {
       // Update form with fresh data from server
       setForm(prev => ({
         ...prev,
-        profilePhoto: profile.profilePhoto || null
+        profilePhoto: null  // Clear the File object after successful upload
       }));
       
       // Clear preview since we now have the actual photo URL
       if (profilePreview && profilePreview.startsWith('blob:')) {
         URL.revokeObjectURL(profilePreview);
-        setProfilePreview(null);
       }
+      setProfilePreview(profile.profilePhoto || null);
       
       setSuccessMessage("Profile saved successfully");
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -325,7 +325,7 @@ const Profile = () => {
       <div className="mb-6 text-center">
         <div className="relative inline-block">
           <img 
-            src={getProfileImageUrl(form.profilePhoto || profilePreview, form.gender, form.name)}
+            src={getProfileImageUrl(profilePreview || form.profilePhoto, form.gender, form.name)}
             alt="Profile Preview" 
             className="mx-auto h-32 w-32 rounded-full object-cover border-2 border-red-500"
             onError={(e) => {

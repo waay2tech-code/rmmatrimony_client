@@ -107,7 +107,7 @@ const HomePage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               ["200+", "Active Members"],
-              ["40+", "Success Stories"],
+              ["50+", "Success Stories"],
               ["20+", "Daily Matches"],
               ["98%", "Satisfaction Rate"],
             ].map(([value, label], i) => (
@@ -256,16 +256,16 @@ const HomePage = () => {
           >
             <motion.div variants={item}>
               <StoryCard 
-                name="Priya & Rajesh" 
-                content="Found my soulmate through RM Matrimony. The matching algorithm is incredible! We connected within a week of joining and got married within a year. Highly recommend!" 
+                name="Mary Reshma & Roshan divine Fernando" 
+                content="After months of searching elsewhere, RM Matrimony stood out because of its Christian values and sincerity. The profiles were genuine, and the team personally guided us through each step. We truly believe our union was God’s will, fulfilled through this platform." 
                 location="Chennai, Tamil Nadu"
               />
             </motion.div>
             <motion.div variants={item}>
               <StoryCard 
-                name="Sneha & Vikram" 
-                content="User-friendly interface, verified profiles and excellent customer service! The team helped us throughout our journey. We found each other in just 3 months!" 
-                location="Bangalore, Karnataka"
+                name="Sushmitha & Jameson" 
+                content="I always believed that God has a plan for everyone, and RM Matrimony helped me find the one written in mine. The platform made everything easy and prayerful. Today, we’re happily married and thankful to this wonderful team for being part of our journey." 
+                location="Tirunelveli, Tamil Nadu"
               />
             </motion.div>
           </motion.div>
@@ -301,19 +301,19 @@ const HomePage = () => {
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
             <TestimonialCard 
-              quote="The verification process gave me confidence that I was connecting with real people. Found my partner within 2 months!"
-              author="Anjali"
-              role="Member since 2023"
+              quote="I joined RM Matrimony a few months ago, and I truly appreciate how they treat every profile with care and respect. The team regularly checks in, prays with us, and encourages us to wait for God’s timing. I know my match will come through here."
+              author="Annie Rubella"
+              role="Member since 2024"
             />
             <TestimonialCard 
-              quote="As a working professional, I appreciated the privacy options. The matching algorithm understood what I was looking for."
-              author="Rahul"
-              role="Member since 2022"
+              quote="I appreciate the sincerity and personal attention from the RM Matrimony team. They understand what I’m looking for in a faith-based marriage and always suggest profiles that match my values. I’m hopeful my story will soon become a success story!"
+              author="Michael Fernando"
+              role="Member since 2024"
             />
             <TestimonialCard 
-              quote="The customer support team was incredibly helpful throughout my journey. They made the entire process smooth."
-              author="Kavita"
-              role="Member since 2023"
+              quote="The RM Matrimony team has been so patient and kind. They encourage me to trust the Lord in this process. I’m thankful for their dedication and for creating a platform that truly reflects Christian love and integrity."
+              author="Reny Michael Antony"
+              role="Member since 2025"
             />
           </motion.div>
         </div>
