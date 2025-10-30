@@ -37,22 +37,31 @@ export const getDefaultProfileImage = (gender, name) => {
  * @returns {string} - Complete image URL
  */
 export const getProfileImageUrl = (profilePhoto, gender, name) => {
+  console.log("getProfileImageUrl called with:", { profilePhoto, gender, name });
+  
   // Handle case where profilePhoto is a File object
   if (profilePhoto instanceof File) {
-    return URL.createObjectURL(profilePhoto);
+    const url = URL.createObjectURL(profilePhoto);
+    console.log("Returning File object URL:", url);
+    return url;
   }
   
   // Handle case where profilePhoto is not a string (null, undefined, etc.)
   if (typeof profilePhoto !== 'string') {
-    return getDefaultProfileImage(gender, name);
+    const defaultImg = getDefaultProfileImage(gender, name);
+    console.log("Returning default image (invalid type):", defaultImg);
+    return defaultImg;
   }
   
   if (!profilePhoto) {
-    return getDefaultProfileImage(gender, name);
+    const defaultImg = getDefaultProfileImage(gender, name);
+    console.log("Returning default image (empty):", defaultImg);
+    return defaultImg;
   }
   
   // Handle different URL formats
   if (profilePhoto.startsWith('blob:') || profilePhoto.startsWith('data:')) {
+    console.log("Returning blob/data URL:", profilePhoto);
     return profilePhoto;
   }
   
@@ -67,12 +76,22 @@ export const getProfileImageUrl = (profilePhoto, gender, name) => {
 
   // Normalize leading slash
   const normalized = profilePhoto.startsWith('/') ? profilePhoto.slice(1) : profilePhoto;
-
-  // If path already points to uploads or similar, prefix with origin
+  
+  // Ensure we have a proper URL path
   if (normalized.startsWith('uploads/')) {
-    return `${origin}/${normalized}`;
+    const fullUrl = `${origin}/${normalized}`;
+    console.log("Returning full URL (uploads):", fullUrl);
+    return fullUrl;
+  }
+  
+  // Handle absolute paths that might already include the origin
+  if (profilePhoto.startsWith(origin)) {
+    console.log("Returning full URL (already absolute):", profilePhoto);
+    return profilePhoto;
   }
 
   // Fallback: if server returned a leading slash path
-  return `${origin}/${normalized}`;
+  const fallbackUrl = `${origin}/${normalized}`;
+  console.log("Returning fallback URL:", fallbackUrl);
+  return fallbackUrl;
 };

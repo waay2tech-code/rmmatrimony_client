@@ -29,6 +29,11 @@ const PhotoGallery = ({ images, onDelete, onUpload }) => {
 
   const buildImageSrc = (url) => {
     if (!url) return '';
+    // If it's already an absolute URL, return as is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    // Normalize the URL path
     const normalized = url.startsWith('/') ? url.slice(1) : url;
     return `${origin}/${normalized}`;
   };

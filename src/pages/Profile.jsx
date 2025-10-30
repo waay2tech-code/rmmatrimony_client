@@ -111,6 +111,7 @@ const Profile = () => {
         });
 
         // Set profile photo preview
+        console.log("Profile photo from server:", profile.profilePhoto);
         if (profile.profilePhoto) {
           setProfilePreview(profile.profilePhoto);
         } else if (profile.profilePhotoUrl) {
@@ -324,6 +325,7 @@ const Profile = () => {
     <>
       <div className="mb-6 text-center">
         <div className="relative inline-block">
+          {console.log("Profile preview:", profilePreview, "Form profile photo:", form.profilePhoto)}
           <img 
             src={getProfileImageUrl(profilePreview || form.profilePhoto, form.gender, form.name)}
             alt="Profile Preview" 

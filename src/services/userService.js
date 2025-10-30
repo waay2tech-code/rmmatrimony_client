@@ -63,7 +63,7 @@ export const userService = {
   },
 
   // Update user profile
-  updateProfile: async (profileData,id) => {
+  updateProfile: async (profileData) => {
     try {
       const response = await api.put('/users/profile', profileData, {
         headers: {
