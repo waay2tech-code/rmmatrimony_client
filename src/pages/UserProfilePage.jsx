@@ -128,89 +128,89 @@ const UserProfilePage = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="p-6 md:p-8"
+      className="p-4 sm:p-6 md:p-8"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         {/* Personal Information */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl shadow-lg p-6"
+          className="bg-white rounded-2xl shadow-lg p-4 sm:p-6"
         >
-          <h2 className="text-xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-red-100">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 pb-2 border-b-2 border-red-100">
             Personal Information
           </h2>
-          <div className="space-y-4">
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <FaUser className="text-red-600" />
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <FaUser className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Gender</p>
-                <p className="font-medium">{profile.gender || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Gender</p>
+                <p className="font-medium text-sm sm:text-base">{profile.gender || 'Not specified'}</p>
               </div>
             </div>
             
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <FaEnvelope className="text-red-600" />
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <FaEnvelope className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Email</p>
-                <p className="font-medium">{profile.email || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Email</p>
+                <p className="font-medium text-sm sm:text-base">{profile.email || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <FaPhone className="text-red-600" />
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <FaPhone className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Mobile</p>
-                <p className="font-medium">{profile.mobile || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Mobile</p>
+                <p className="font-medium text-sm sm:text-base">{profile.mobile || 'Not specified'}</p>
               </div>
             </div>
 
             {profile.memberid && (
-              <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-                <div className="bg-yellow-100 p-3 rounded-full mr-4">
-                  <span className="text-yellow-600 font-bold">#</span>
+              <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+                <div className="bg-yellow-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                  <span className="text-yellow-600 font-bold text-sm sm:text-base">#</span>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Member ID</p>
-                  <p className="font-medium text-green-600">{profile.memberid}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">Member ID</p>
+                  <p className="font-medium text-green-600 text-sm sm:text-base">{profile.memberid}</p>
                 </div>
               </div>
             )}
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <span className="text-red-600">🏛️</span>
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">🏛️</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Religion</p>
-                <p className="font-medium">{profile.religion || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Religion</p>
+                <p className="font-medium text-sm sm:text-base">{profile.religion || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <span className="text-red-600">👥</span>
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">👥</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Caste</p>
-                <p className="font-medium">{profile.caste || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Caste</p>
+                <p className="font-medium text-sm sm:text-base">{profile.caste || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <span className="text-red-600">📏</span>
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">📏</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Height</p>
-                <p className="font-medium">{profile.height || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Height</p>
+                <p className="font-medium text-sm sm:text-base">{profile.height || 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -221,59 +221,59 @@ const UserProfilePage = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-lg p-6"
+          className="bg-white rounded-2xl shadow-lg p-4 sm:p-6"
         >
-          <h2 className="text-xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-red-100">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 pb-2 border-b-2 border-red-100">
             Professional & Family
           </h2>
-          <div className="space-y-4">
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <FaBriefcase className="text-red-600" />
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <FaBriefcase className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Occupation</p>
-                <p className="font-medium">{profile.occupation || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Occupation</p>
+                <p className="font-medium text-sm sm:text-base">{profile.occupation || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <span className="text-red-600">💰</span>
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">💰</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Monthly Income</p>
-                <p className="font-medium">{profile.monthlyIncome || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Monthly Income</p>
+                <p className="font-medium text-sm sm:text-base">{profile.monthlyIncome || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <span className="text-red-600">👨</span>
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">👨</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Father's Name</p>
-                <p className="font-medium">{profile.fatherName || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Father's Name</p>
+                <p className="font-medium text-sm sm:text-base">{profile.fatherName || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <span className="text-red-600">👩</span>
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">👩</span>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Mother's Name</p>
-                <p className="font-medium">{profile.motherName || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Mother's Name</p>
+                <p className="font-medium text-sm sm:text-base">{profile.motherName || 'Not specified'}</p>
               </div>
             </div>
 
-            <div className="flex items-center p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-3 rounded-full mr-4">
-                <FaUsers className="text-red-600" />
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <FaUsers className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">No. of Siblings</p>
-                <p className="font-medium">{profile.noOfSiblings || 'Not specified'}</p>
+                <p className="text-xs sm:text-sm text-gray-500">No. of Siblings</p>
+                <p className="font-medium text-sm sm:text-base">{profile.noOfSiblings || 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -286,12 +286,12 @@ const UserProfilePage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 bg-white rounded-2xl shadow-lg p-6"
+          className="mt-6 sm:mt-8 bg-white rounded-2xl shadow-lg p-4 sm:p-6"
         >
-          <h2 className="text-xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-red-100">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 pb-2 border-b-2 border-red-100">
             About
           </h2>
-          <p className="text-gray-700 leading-relaxed">{profile.about}</p>
+          <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{profile.about}</p>
         </motion.div>
       )}
 
@@ -300,13 +300,13 @@ const UserProfilePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+        className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
       >
         <motion.button 
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleLikeProfile}
-          className="flex items-center justify-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-8 py-4 rounded-full hover:from-red-600 hover:to-orange-600 transition shadow-lg"
+          className="flex items-center justify-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:from-red-600 hover:to-orange-600 transition shadow-lg text-sm sm:text-base"
         >
           <FaHeart className="mr-2" />
           Like Profile
@@ -316,7 +316,7 @@ const UserProfilePage = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleSendInterest}
-          className="flex items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-8 py-4 rounded-full hover:from-purple-600 hover:to-indigo-600 transition shadow-lg"
+          className="flex items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:from-purple-600 hover:to-indigo-600 transition shadow-lg text-sm sm:text-base"
         >
           Send Interest
         </motion.button> */}
@@ -328,22 +328,22 @@ const UserProfilePage = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="p-6 md:p-8"
+      className="p-4 sm:p-6 md:p-8"
     >
-      <h2 className="text-xl font-bold text-gray-800 mb-6">Photo Gallery</h2>
+      <h2 className="text-xl font-bold text-gray-800 mb-4 sm:mb-6">Photo Gallery</h2>
       
       {gallery.length === 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center py-16"
+          className="text-center py-12 sm:py-16"
         >
-          <FaImages className="mx-auto text-gray-300 text-7xl mb-6" />
-          <p className="text-gray-500 text-xl">No photos available</p>
+          <FaImages className="mx-auto text-gray-300 text-5xl sm:text-7xl mb-4 sm:mb-6" />
+          <p className="text-gray-500 text-lg sm:text-xl">No photos available</p>
         </motion.div>
       ) : (
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           layout
         >
           {gallery.map((photo, index) => (
@@ -358,7 +358,7 @@ const UserProfilePage = () => {
               <img
                 src={`http://localhost:5000/${photo.url}`}
                 alt={`Gallery ${index + 1}`}
-                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                 onError={(e) => {
                   e.target.src = '/default-image.png';
                 }}
@@ -366,7 +366,7 @@ const UserProfilePage = () => {
               
               {/* Profile photo indicator */}
               {photo.isProfile && (
-                <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold shadow-lg">
                   Profile Photo
                 </div>
               )}
@@ -381,10 +381,10 @@ const UserProfilePage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 py-6 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header with Back Button */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -400,22 +400,22 @@ const UserProfilePage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-3xl shadow-xl overflow-hidden"
+          className="bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden"
         >
           {/* Profile Header */}
-          <div className="relative bg-gradient-to-r from-red-500 to-orange-500 text-white p-8">
+          <div className="relative bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 sm:p-8">
             <div className="flex flex-col md:flex-row items-center">
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="mb-6 md:mb-0 md:mr-8"
+                className="mb-6 md:mb-0 md:mr-6 lg:mr-8"
               >
                 <div className="relative">
                   <img
                     src={getProfileImageUrl(profile.profilePhoto, profile.gender, profile.name)}
                     alt={profile.name || 'Profile'}
-                    className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-2xl"
+                    className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-2xl"
                     onError={(e) => {
                       e.target.src = getDefaultProfileImage(profile.gender, profile.name);
                     }}
@@ -447,15 +447,15 @@ const UserProfilePage = () => {
                 transition={{ delay: 0.3 }}
                 className="text-center md:text-left"
               >
-                <h1 className="text-4xl font-bold mb-3">{profile.name}</h1>
-                <div className="flex flex-wrap justify-center md:justify-start gap-3 text-lg mb-4">
-                  <span className="bg-white bg-opacity-20 py-1 px-4 rounded-full">{profile.age} years old</span>
-                  <span className="bg-white bg-opacity-20 py-1 px-4 rounded-full flex items-center">
-                    <FaMapPin className="mr-2" />
+                <h1 className="text-3xl sm:text-4xl font-bold mb-2 sm:mb-3">{profile.name}</h1>
+                <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-3 text-base sm:text-lg mb-3 sm:mb-4">
+                  <span className="bg-white bg-opacity-20 py-1 px-3 sm:px-4 rounded-full">{profile.age} years old</span>
+                  <span className="bg-white bg-opacity-20 py-1 px-3 sm:px-4 rounded-full flex items-center">
+                    <FaMapPin className="mr-1 sm:mr-2" />
                     {profile.location}
                   </span>
                 </div>
-                <p className="text-xl mb-4">{profile.occupation}</p>
+                <p className="text-lg sm:text-xl mb-3 sm:mb-4">{profile.occupation}</p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-2">
                   <span className="bg-white text-red-600 py-1 px-3 rounded-full text-sm font-medium">
                     {profile.religion}
@@ -473,7 +473,7 @@ const UserProfilePage = () => {
             <motion.button
               whileHover={{ y: -2 }}
               onClick={() => setActiveTab('profile')}
-              className={`px-8 py-5 font-semibold transition-all relative ${
+              className={`px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 font-semibold transition-all text-sm sm:text-base relative ${
                 activeTab === 'profile'
                   ? 'text-red-600'
                   : 'text-gray-600 hover:text-red-600'
@@ -490,7 +490,7 @@ const UserProfilePage = () => {
             <motion.button
               whileHover={{ y: -2 }}
               onClick={() => setActiveTab('gallery')}
-              className={`px-8 py-5 font-semibold transition-all relative ${
+              className={`px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 font-semibold transition-all text-sm sm:text-base relative ${
                 activeTab === 'gallery'
                   ? 'text-red-600'
                   : 'text-gray-600 hover:text-red-600'

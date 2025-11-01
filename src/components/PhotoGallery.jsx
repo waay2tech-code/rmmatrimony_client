@@ -42,7 +42,7 @@ const PhotoGallery = ({ images, onDelete, onUpload }) => {
     <div className="space-y-4">
       <div className="flex gap-4 flex-wrap">
       {images.map((img, index) => (
-  <div key={index} className="relative w-24 h-24">
+  <div key={index} className="relative w-24 h-24 sm:w-32 sm:h-32">
     <img
       src={buildImageSrc(img.url)}
       alt={img.url || 'Profile'}

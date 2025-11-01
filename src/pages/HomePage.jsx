@@ -204,22 +204,22 @@ const HomePage = () => {
             <motion.div variants={item}>
               <FeatureCard 
                 icon={<FaHeart className="text-red-500 text-3xl" />} 
-                title="Smart Matching" 
-                desc="AI-powered algorithm finds your compatible soulmate quickly." 
+                title="Privacy & Confidentiality" 
+                desc="Your personal information is handled with utmost care and kept completely confidential" 
               />
             </motion.div>
             <motion.div variants={item}>
               <FeatureCard 
                 icon={<FaStar className="text-red-500 text-3xl" />} 
                 title="Success Stories" 
-                desc="Over 50,000+ successful matches through our platform." 
+                desc="Over 50+ successful matches through our platform." 
               />
             </motion.div>
             <motion.div variants={item}>
               <FeatureCard 
                 icon={<FaUsers className="text-red-500 text-3xl" />} 
-                title="Premium Support" 
-                desc="24/7 customer support to help you find your perfect match." 
+                title="Easy & User friendly Platform" 
+                desc="Our website is designed to make searching, connecting and communicating simple and convenient." 
               />
             </motion.div>
           </motion.div>

@@ -356,7 +356,7 @@ const Profile = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-xl shadow">
-        <h3 className="col-span-2 text-xl font-semibold text-gray-800">Personal Information</h3>
+        <h3 className="col-span-full text-xl font-semibold text-gray-800">Personal Information</h3>
 
         <div>
           <label className="block font-medium">Full Name *</label>
@@ -502,7 +502,7 @@ const Profile = () => {
           />
         </div>
 
-        <div className="col-span-2">
+        <div className="col-span-full">
           <label className="block font-medium">About Me</label>
           <textarea 
             name="aboutMe" 
@@ -514,7 +514,7 @@ const Profile = () => {
           />
         </div>
 
-        <h3 className="col-span-2 text-xl font-semibold mt-4 text-gray-800">Family Information</h3>
+        <h3 className="col-span-full text-xl font-semibold mt-4 text-gray-800">Family Information</h3>
 
         <div>
           <label className="block font-medium">Father's Name</label>
@@ -665,7 +665,7 @@ const Profile = () => {
   );
 
   const renderPhotosTab = () => (
-    <div className="bg-white p-6 rounded-xl shadow">
+    <div className="bg-white p-4 sm:p-6 rounded-xl shadow">
       <PhotoGallery images={galleryImages} onDelete={deletePhoto} />
       
       {galleryImages.length < 3 && (
@@ -676,12 +676,12 @@ const Profile = () => {
               <img 
                 src={newPhotoPreview} 
                 alt="Preview" 
-                className="h-48 w-full object-cover rounded-lg border"
+                className="h-40 w-full object-cover rounded-lg border"
               />
             </div>
           )}
-          <div className="flex items-center gap-4">
-            <label className="cursor-pointer bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <label className="cursor-pointer bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition w-full sm:w-auto text-center">
               Select Photo
               <input 
                 type="file" 
@@ -696,7 +696,7 @@ const Profile = () => {
               <button 
                 onClick={addPhoto}
                 disabled={isLoading}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 disabled:bg-red-400"
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 disabled:bg-red-400 w-full sm:w-auto"
               >
                 {isLoading ? "Uploading..." : "Upload Photo"}
               </button>
@@ -715,9 +715,9 @@ const Profile = () => {
   );
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-2 text-center">My Profile</h2>
-      <p className="text-center text-gray-600 mb-8">Manage your profile information and preferences</p>
+    <div className="max-w-5xl mx-auto p-4 sm:p-6">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-center">My Profile</h2>
+      <p className="text-center text-gray-600 mb-6 sm:mb-8">Manage your profile information and preferences</p>
 
       {errors.fetch && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -725,16 +725,16 @@ const Profile = () => {
         </div>
       )}
 
-      <div className="flex justify-center mb-8 gap-4">
+      <div className="flex justify-center mb-6 sm:mb-8 gap-2 sm:gap-4">
         <button 
           onClick={() => setActiveTab("profile")} 
-          className={`px-4 py-2 font-semibold ${activeTab === "profile" ? "border-b-4 border-red-500 text-red-600" : "text-gray-500 hover:text-black"}`}
+          className={`px-3 py-2 sm:px-4 sm:py-2 font-semibold text-sm sm:text-base ${activeTab === "profile" ? "border-b-4 border-red-500 text-red-600" : "text-gray-500 hover:text-black"}`}
         >
           Profile
         </button>
         <button 
           onClick={() => setActiveTab("photos")} 
-          className={`px-4 py-2 font-semibold ${activeTab === "photos" ? "border-b-4 border-red-500 text-red-600" : "text-gray-500 hover:text-black"}`}
+          className={`px-3 py-2 sm:px-4 sm:py-2 font-semibold text-sm sm:text-base ${activeTab === "photos" ? "border-b-4 border-red-500 text-red-600" : "text-gray-500 hover:text-black"}`}
         >
           Photos
         </button>
