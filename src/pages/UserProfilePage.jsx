@@ -14,6 +14,7 @@ const UserProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('profile');
+  const [isMutualLike, setIsMutualLike] = useState(false);
 
   // Fetch user profile and gallery by ID using services
   useEffect(() => {
@@ -24,10 +25,12 @@ const UserProfilePage = () => {
         // Fetch user profile using service
         const profileResponse = await userService.getUserById(id);
         setProfile(profileResponse.profile);
+        setIsMutualLike(profileResponse.isMutualLike || false);
 
         // Fetch user gallery using service
         const galleryResponse = await userService.getUserGallery(id);
         setGallery(galleryResponse.gallery || []);
+        setIsMutualLike(galleryResponse.isMutualLike || profileResponse.isMutualLike || false);
         
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -46,6 +49,14 @@ const UserProfilePage = () => {
   const handleLikeProfile = async () => {
     try {
       await userService.toggleLike(id);
+      // Refresh the profile data after liking
+      const profileResponse = await userService.getUserById(id);
+      setProfile(profileResponse.profile);
+      setIsMutualLike(profileResponse.isMutualLike || false);
+      
+      const galleryResponse = await userService.getUserGallery(id);
+      setGallery(galleryResponse.gallery || []);
+      
       alert('Like action completed!');
     } catch (error) {
       console.error('Error liking profile:', error);
@@ -62,6 +73,29 @@ const UserProfilePage = () => {
       console.error('Error sending interest:', error);
       alert('Failed to send interest. Please try again.');
     }
+  };
+
+  // Helper function to build image URLs properly
+  const buildImageSrc = (url) => {
+    if (!url) return '/default-image.png';
+    
+    // If it's already an absolute URL, return as is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    
+    // Handle URLs that start with /uploads/
+    if (url.startsWith('/uploads/')) {
+      return `http://localhost:5000${url}`;
+    }
+    
+    // Handle URLs that start with uploads/ (without leading slash)
+    if (url.startsWith('uploads/')) {
+      return `http://localhost:5000/${url}`;
+    }
+    
+    // Default fallback
+    return `http://localhost:5000/${url}`;
   };
 
   // Loading state
@@ -154,21 +188,13 @@ const UserProfilePage = () => {
             
             <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
               <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
-                <FaEnvelope className="text-red-600 text-sm sm:text-base" />
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm text-gray-500">Email</p>
-                <p className="font-medium text-sm sm:text-base">{profile.email || 'Not specified'}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
-              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
                 <FaPhone className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-gray-500">Mobile</p>
-                <p className="font-medium text-sm sm:text-base">{profile.mobile || 'Not specified'}</p>
+                <p className="font-medium text-sm sm:text-base">
+                  {isMutualLike ? profile.mobile : 'Hidden - Like this profile to view'}
+                </p>
               </div>
             </div>
 
@@ -211,6 +237,27 @@ const UserProfilePage = () => {
               <div>
                 <p className="text-xs sm:text-sm text-gray-500">Height</p>
                 <p className="font-medium text-sm sm:text-base">{profile.height || 'Not specified'}</p>
+              </div>
+            </div>
+
+            {/* New Fields */}
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">🎓</span>
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm text-gray-500">Qualification</p>
+                <p className="font-medium text-sm sm:text-base">{profile.qualification || 'Not specified'}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <FaMapPin className="text-red-600 text-sm sm:text-base" />
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm text-gray-500">Address</p>
+                <p className="font-medium text-sm sm:text-base">{profile.address || 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -259,6 +306,16 @@ const UserProfilePage = () => {
 
             <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
               <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">👨</span>
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm text-gray-500">Father's Native</p>
+                <p className="font-medium text-sm sm:text-base">{profile.fatherNative || 'Not specified'}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
                 <span className="text-red-600 text-sm sm:text-base">👩</span>
               </div>
               <div>
@@ -269,11 +326,21 @@ const UserProfilePage = () => {
 
             <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
               <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">👩</span>
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm text-gray-500">Mother's Native</p>
+                <p className="font-medium text-sm sm:text-base">{profile.motherNative || 'Not specified'}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
                 <FaUsers className="text-red-600 text-sm sm:text-base" />
               </div>
               <div>
                 <p className="text-xs sm:text-sm text-gray-500">No. of Siblings</p>
-                <p className="font-medium text-sm sm:text-base">{profile.noOfSiblings || 'Not specified'}</p>
+                <p className="font-medium text-sm sm:text-base">{profile.siblings || 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -332,7 +399,16 @@ const UserProfilePage = () => {
     >
       <h2 className="text-xl font-bold text-gray-800 mb-4 sm:mb-6">Photo Gallery</h2>
       
-      {gallery.length === 0 ? (
+      {!isMutualLike ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12 sm:py-16"
+        >
+          <FaImages className="mx-auto text-gray-300 text-5xl sm:text-7xl mb-4 sm:mb-6" />
+          <p className="text-gray-500 text-lg sm:text-xl">Gallery is hidden - If both of you like each other you can view the gallery.</p>
+        </motion.div>
+      ) : gallery.length === 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -355,8 +431,9 @@ const UserProfilePage = () => {
               whileHover={{ y: -5 }}
               className="relative group overflow-hidden rounded-2xl shadow-lg"
             >
+              {/* Fixed image URL construction */}
               <img
-                src={`http://localhost:5000/${photo.url}`}
+                src={buildImageSrc(photo.url)}
                 alt={`Gallery ${index + 1}`}
                 className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                 onError={(e) => {
@@ -496,7 +573,7 @@ const UserProfilePage = () => {
                   : 'text-gray-600 hover:text-red-600'
               }`}
             >
-              Gallery ({gallery.length})
+              Gallery ({isMutualLike ? gallery.length : 'Hidden'})
               {activeTab === 'gallery' && (
                 <motion.div
                   layoutId="tabIndicator"

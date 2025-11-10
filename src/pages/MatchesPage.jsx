@@ -324,19 +324,17 @@ const MatchesPage = () => {
                       </span>
                     </div>
 
-                    {/* Show qualification and occupation info only for mutual likes */}
-                    {match.isMutualLike && (
-                      <div className="grid grid-cols-2 gap-3 mb-4">
-                        <div className="bg-red-50 p-3 rounded-lg">
-                          <p className="text-xs text-gray-500">Qualification</p>
-                          <p className="text-gray-700 font-medium">{match.qualification || 'Not specified'}</p>
-                        </div>
-                        <div className="bg-red-50 p-3 rounded-lg">
-                          <p className="text-xs text-gray-500">Occupation</p>
-                          <p className="text-gray-700 font-medium">{match.occupation || 'Not specified'}</p>
-                        </div>
+                    {/* Show qualification and occupation info for all users */}
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div className="bg-red-50 p-3 rounded-lg">
+                        <p className="text-xs text-gray-500">Qualification</p>
+                        <p className="text-gray-700 font-medium">{match.qualification || 'Not specified'}</p>
                       </div>
-                    )}
+                      <div className="bg-red-50 p-3 rounded-lg">
+                        <p className="text-xs text-gray-500">Occupation</p>
+                        <p className="text-gray-700 font-medium">{match.occupation || 'Not specified'}</p>
+                      </div>
+                    </div>
 
                     {/* Action Buttons */}
                     <div className="flex flex-col space-y-3">

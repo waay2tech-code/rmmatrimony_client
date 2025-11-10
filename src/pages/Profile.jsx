@@ -16,8 +16,8 @@ const Profile = () => {
     occupation: "",
     monthlyIncome: "",
     height: "",
-    weight: "", 
-    aboutMe: "",
+    // weight: "", 
+    // aboutMe: "",
     fatherName: "",
     fatherOccupation: "",
     fatherNative: "",
@@ -94,8 +94,8 @@ const Profile = () => {
           occupation: profile.occupation || "",
           monthlyIncome: profile.monthlyIncome || "",
           height: profile.height || "",
-          weight: profile.weight || "",
-          aboutMe: profile.aboutMe || "",
+          // weight: profile.weight || "",
+          // aboutMe: profile.aboutMe || "",
           fatherName: profile.fatherName || "",
           fatherOccupation: profile.fatherOccupation || "",
           fatherNative: profile.fatherNative || "",
@@ -470,7 +470,7 @@ const Profile = () => {
         </div>
 
         <div>
-          <label className="block font-medium">Monthly Income</label>
+          <label className="block font-medium">Income *Please specify your income (monthly or annually):</label>
           <input 
             type="text" 
             name="monthlyIncome" 
@@ -491,7 +491,7 @@ const Profile = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="block font-medium">Weight</label>
           <input 
             type="text" 
@@ -500,9 +500,9 @@ const Profile = () => {
             onChange={handleChange} 
             className="w-full border mt-1 p-2 rounded" 
           />
-        </div>
+        </div> */}
 
-        <div className="col-span-full">
+        {/* <div className="col-span-full">
           <label className="block font-medium">About Me</label>
           <textarea 
             name="aboutMe" 
@@ -512,7 +512,7 @@ const Profile = () => {
             className="w-full border mt-1 p-2 rounded resize-none" 
             maxLength="500"
           />
-        </div>
+        </div> */}
 
         <h3 className="col-span-full text-xl font-semibold mt-4 text-gray-800">Family Information</h3>
 
