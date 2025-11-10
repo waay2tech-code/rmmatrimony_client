@@ -14,6 +14,7 @@ const SearchPage = () => {
     location: "",
     religion: "",
     caste: "",
+    gender: "",
   });
 
   const [profiles, setProfiles] = useState([]);
@@ -70,7 +71,9 @@ const SearchPage = () => {
   const fetchProfiles = async () => {
     setLoading(true);
     try {
+      console.log("Fetching profiles with filters:", filters);
       const profilesData = await userService.getAllUsers(filters);
+      console.log("Received profiles data:", profilesData);
       setProfiles(profilesData.users || profilesData);
     } catch (error) {
       console.error("Error fetching profiles:", error);
@@ -97,12 +100,16 @@ const SearchPage = () => {
 
   // Handle filter changes
   const handleFilterChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    const newFilters = { ...filters, [e.target.name]: e.target.value };
+    console.log("Filter changed:", e.target.name, e.target.value);
+    console.log("Updated filters:", newFilters);
+    setFilters(newFilters);
   };
 
   // Handle search
   const handleSearch = (e) => {
     e.preventDefault();
+    console.log("🔍 Search initiated with filters:", filters);
     fetchProfiles();
   };
 
@@ -127,11 +134,13 @@ const SearchPage = () => {
 
   // Clear all filters
   const clearFilters = () => {
+    console.log("🧹 Clearing all filters");
     setFilters({
       age: "",
       location: "",
       religion: "",
       caste: "",
+      gender: "",
     });
   };
 
@@ -238,20 +247,37 @@ const SearchPage = () => {
             </div>
             
             <form onSubmit={handleSearch}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {["age", "location", "religion", "caste"].map((field) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                {["age", "location", "religion", "caste", "gender"].map((field) => (
                   <div key={field}>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       {field.charAt(0).toUpperCase() + field.slice(1)}
                     </label>
-                    <input
-                      type="text"
-                      name={field}
-                      placeholder={`Enter ${field}`}
-                      value={filters[field]}
-                      onChange={handleFilterChange}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
-                    />
+                    {field === "gender" ? (
+                      <select
+                        name={field}
+                        value={filters[field]}
+                        onChange={(e) => {
+                          console.log("Gender select changed:", e.target.value);
+                          handleFilterChange(e);
+                        }}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        name={field}
+                        placeholder={`Enter ${field}`}
+                        value={filters[field]}
+                        onChange={handleFilterChange}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
@@ -401,6 +427,9 @@ const SearchPage = () => {
                         </span>
                         <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                           {profile.qualification || 'Not specified'}
+                        </span>
+                        <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                          {profile.gender}
                         </span>
                       </div>
 

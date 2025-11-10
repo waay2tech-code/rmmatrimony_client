@@ -103,9 +103,12 @@ export const userService = {
   // Get all users with filters (for search page)
   getAllUsers: async (filters = {}) => {
     try {
-      const response = await api.get('/users/allusers', { params: filters });
+      console.log("📡 API call to /matches/search with filters:", filters);
+      const response = await api.get('/matches/search', { params: filters });
+      console.log("✅ API response:", response.data);
       return response.data;
     } catch (error) {
+      console.error("❌ API error:", error);
       throw error;
     }
   },
