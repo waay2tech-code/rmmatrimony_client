@@ -84,18 +84,27 @@ const UserProfilePage = () => {
       return url;
     }
     
+    // Derive API origin from VITE_API_URL (e.g., https://api.example.com/api -> https://api.example.com)
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    let origin;
+    try {
+      origin = new URL(apiUrl).origin;
+    } catch (e) {
+      origin = 'http://localhost:5000';
+    }
+    
     // Handle URLs that start with /uploads/
     if (url.startsWith('/uploads/')) {
-      return `http://localhost:5000${url}`;
+      return `${origin}${url}`;
     }
     
     // Handle URLs that start with uploads/ (without leading slash)
     if (url.startsWith('uploads/')) {
-      return `http://localhost:5000/${url}`;
+      return `${origin}/${url}`;
     }
     
-    // Default fallback
-    return `http://localhost:5000/${url}`;
+    // Default fallback - assume it's a relative path that needs the base URL
+    return `${origin}/${url}`;
   };
 
   // Loading state
