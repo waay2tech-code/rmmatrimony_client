@@ -100,12 +100,15 @@ export const userService = {
     }
   },
 
-  // Get all users with filters (for search page)
+  // Get all users with filters (for admin panel)
   getAllUsers: async (filters = {}) => {
     try {
-      console.log("📡 API call to /matches/search with filters:", filters);
-      const response = await api.get('/matches/search', { params: filters });
-      console.log("✅ API response:", response.data);
+      const params = {};
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) params[key] = value;
+      });
+      
+      const response = await api.get('/users/allusers', { params });
       return response.data;
     } catch (error) {
       console.error("❌ API error:", error);
@@ -224,21 +227,8 @@ export const userService = {
     return response.data;
   },
 
-  // Get all users with filters
-//   getAllUsers: async (filters = {}) => {
-//     const params = {};
-//     Object.entries(filters).forEach(([key, value]) => {
-//       if (value) params[key] = value;
-//     });
-    
-//     const response = await api.get('/users/allusers', { params });
-//     return response.data;
-//   },
-   // Like/unlike a profile
-//    toggleLike: async (profileId) => {
-//     const response = await api.post(`/users/like/${profileId}`, {});
-//     return response.data;
-//   }
+  
+   
 
 
 updateUserByAdmin: async (userId, userData) => {

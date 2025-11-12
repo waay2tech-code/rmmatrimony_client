@@ -148,7 +148,7 @@ const ProfileCard = ({ profile, onClose }) => {
               </div>
               <div>
                 <p className="text-xs md:text-sm text-gray-500">No. of Siblings</p>
-                <p className="font-medium text-sm md:text-base">{profile.noOfSiblings || 'Not specified'}</p>
+                <p className="font-medium text-sm md:text-base">{profile.siblings || 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -288,7 +288,7 @@ const NotificationsListWithProfileTypeFilter = () => {
   const [selectedProfile, setSelectedProfile] = useState(null);
   
   // New states for profileType filters
-  const [senderProfileType, setSenderProfileType] = useState('all'); // Default to premium
+  const [senderProfileType, setSenderProfileType] = useState('all'); // Default to all
   const [receiverProfileType, setReceiverProfileType] = useState('all'); // Default to all
 
   const navigate = useNavigate();
@@ -313,14 +313,17 @@ const NotificationsListWithProfileTypeFilter = () => {
 
   const handleViewProfile = (user) => {
     // Instead of navigating, we'll show the profile in a modal
-    setSelectedProfile(user);
+    // Only show profile if user object exists
+    if (user) {
+      setSelectedProfile(user);
+    }
   };
 
   const clearFilters = () => {
     setSearchName('');
     setSearchMemberId('');
     setSearchDate('');
-    setSenderProfileType('premium'); // Reset to default
+    setSenderProfileType('all'); // Reset to default
     setReceiverProfileType('all'); // Reset to default
   };
 
@@ -328,13 +331,13 @@ const NotificationsListWithProfileTypeFilter = () => {
   const filteredNotifications = notifications.filter((notification) => {
     const nameMatch =
       searchName === '' ||
-      notification.sender.name.toLowerCase().includes(searchName.toLowerCase()) ||
-      notification.receiver.name.toLowerCase().includes(searchName.toLowerCase());
+      (notification.sender?.name && notification.sender.name.toLowerCase().includes(searchName.toLowerCase())) ||
+      (notification.receiver?.name && notification.receiver.name.toLowerCase().includes(searchName.toLowerCase()));
 
     const memberIdMatch =
       searchMemberId === '' ||
-      (notification.sender.memberid && notification.sender.memberid.toLowerCase().includes(searchMemberId.toLowerCase())) ||
-      (notification.receiver.memberid && notification.receiver.memberid.toLowerCase().includes(searchMemberId.toLowerCase()));
+      (notification.sender?.memberid && notification.sender.memberid.toLowerCase().includes(searchMemberId.toLowerCase())) ||
+      (notification.receiver?.memberid && notification.receiver.memberid.toLowerCase().includes(searchMemberId.toLowerCase()));
 
     let dateMatch = true;
     if (searchDate) {
@@ -344,10 +347,10 @@ const NotificationsListWithProfileTypeFilter = () => {
 
     // Profile type filtering
     const senderTypeMatch = senderProfileType === 'all' ||
-      (notification.sender.profileType?.toLowerCase() || 'free') === senderProfileType;
+      (notification.sender?.profileType?.toLowerCase() || 'free') === senderProfileType;
 
     const receiverTypeMatch = receiverProfileType === 'all' ||
-      (notification.receiver.profileType?.toLowerCase() || 'free') === receiverProfileType;
+      (notification.receiver?.profileType?.toLowerCase() || 'free') === receiverProfileType;
 
     return nameMatch && memberIdMatch && dateMatch && senderTypeMatch && receiverTypeMatch;
   });
@@ -452,9 +455,9 @@ const NotificationsListWithProfileTypeFilter = () => {
               onChange={(e) => setSenderProfileType(e.target.value)}
               className="p-2 text-sm md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             >
-              <option value="premium">Premium</option> {/* Default selected */}
+              <option value="all">All</option> {/* Default selected */}
+              <option value="premium">Premium</option>
               <option value="free">Free</option>
-              <option value="all">All</option>
             </select>
           </div>
 
@@ -522,14 +525,14 @@ const NotificationsListWithProfileTypeFilter = () => {
                     <FaHeart className="text-red-500 text-lg md:text-xl" />
                     <div className="flex items-center flex-wrap gap-1">
                       <span className="font-semibold text-blue-600 text-sm md:text-base">
-                        {notification.sender.name}
+                        {notification.sender?.name || 'Unknown User'}
                       </span>
                       <span className={`px-1.5 py-0.5 md:px-2 md:py-1 text-xs rounded-full font-semibold ${
-                        notification.sender.profileType?.toLowerCase() === 'premium' 
+                        notification.sender?.profileType?.toLowerCase() === 'premium' 
                           ? 'bg-yellow-100 text-yellow-800 border border-yellow-300' 
                           : 'bg-gray-100 text-gray-700 border border-gray-300'
                       }`}>
-                        {notification.sender.profileType?.toLowerCase() === 'premium' ? (
+                        {notification.sender?.profileType?.toLowerCase() === 'premium' ? (
                           <>
                             <FaCrown className="inline mr-0.5 text-xs" />
                             <span className="hidden md:inline">Premium</span>
@@ -543,18 +546,18 @@ const NotificationsListWithProfileTypeFilter = () => {
                           </>
                         )}
                       </span>
-                      
+                    
                       <span className="text-gray-700 mx-1 md:mx-2 text-sm">liked</span>
-                      
+                    
                       <span className="font-semibold text-green-600 text-sm md:text-base">
-                        {notification.receiver.name}
+                        {notification.receiver?.name || 'Unknown User'}
                       </span>
                       <span className={`px-1.5 py-0.5 md:px-2 md:py-1 text-xs rounded-full font-semibold ${
-                        notification.receiver.profileType?.toLowerCase() === 'premium' 
+                        notification.receiver?.profileType?.toLowerCase() === 'premium' 
                           ? 'bg-yellow-100 text-yellow-800 border border-yellow-300' 
                           : 'bg-gray-100 text-gray-700 border border-gray-300'
                       }`}>
-                        {notification.receiver.profileType?.toLowerCase() === 'premium' ? (
+                        {notification.receiver?.profileType?.toLowerCase() === 'premium' ? (
                           <>
                             <FaCrown className="inline mr-0.5 text-xs" />
                             <span className="hidden md:inline">Premium</span>
@@ -568,8 +571,8 @@ const NotificationsListWithProfileTypeFilter = () => {
                           </>
                         )}
                       </span>
-                      
-                      <span className="text-gray-700 text-sm">&apos;s profile</span>
+                    
+                      <span className="text-gray-700 text-sm">'s profile</span>
                     </div>
                   </div>
 
@@ -578,12 +581,12 @@ const NotificationsListWithProfileTypeFilter = () => {
                     <div className="bg-blue-50 p-2 md:p-4 rounded-lg">
                       <h4 className="font-medium text-blue-800 mb-2 text-sm md:text-base">Sender (Liked)</h4>
                       <div className="space-y-1 text-xs md:text-sm">
-                        <p><span className="font-medium">Name:</span> {notification.sender.name}</p>
-                        <p><span className="font-medium">Email:</span> {notification.sender.email}</p>
-                        <p><span className="font-medium">Mobile:</span> {notification.sender.mobile}</p>
+                        <p><span className="font-medium">Name:</span> {notification.sender?.name || 'Unknown User'}</p>
+                        <p><span className="font-medium">Email:</span> {notification.sender?.email || 'N/A'}</p>
+                        <p><span className="font-medium">Mobile:</span> {notification.sender?.mobile || 'N/A'}</p>
                         <p>
                           <span className="font-medium">Member ID:</span> 
-                          {notification.sender.memberid ? (
+                          {notification.sender?.memberid ? (
                             <span className="text-green-600"> {notification.sender.memberid}</span>
                           ) : (
                             <span className="text-red-500 italic"> Not assigned</span>
@@ -595,12 +598,12 @@ const NotificationsListWithProfileTypeFilter = () => {
                     <div className="bg-green-50 p-2 md:p-4 rounded-lg">
                       <h4 className="font-medium text-green-800 mb-2 text-sm md:text-base">Receiver (Liked by)</h4>
                       <div className="space-y-1 text-xs md:text-sm">
-                        <p><span className="font-medium">Name:</span> {notification.receiver.name}</p>
-                        <p><span className="font-medium">Email:</span> {notification.receiver.email}</p>
-                        <p><span className="font-medium">Mobile:</span> {notification.receiver.mobile}</p>
+                        <p><span className="font-medium">Name:</span> {notification.receiver?.name || 'Unknown User'}</p>
+                        <p><span className="font-medium">Email:</span> {notification.receiver?.email || 'N/A'}</p>
+                        <p><span className="font-medium">Mobile:</span> {notification.receiver?.mobile || 'N/A'}</p>
                         <p>
                           <span className="font-medium">Member ID:</span> 
-                          {notification.receiver.memberid ? (
+                          {notification.receiver?.memberid ? (
                             <span className="text-green-600"> {notification.receiver.memberid}</span>
                           ) : (
                             <span className="text-red-500 italic"> Not assigned</span>
@@ -628,6 +631,7 @@ const NotificationsListWithProfileTypeFilter = () => {
                   <button
                     onClick={() => handleViewProfile(notification.sender)}
                     className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-4 md:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap"
+                    disabled={!notification.sender}
                   >
                     <FaUser className="text-xs md:text-sm" />
                     <span className="hidden md:inline">View Sender</span>
@@ -637,6 +641,7 @@ const NotificationsListWithProfileTypeFilter = () => {
                   <button
                     onClick={() => handleViewProfile(notification.receiver)}
                     className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-4 md:py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap"
+                    disabled={!notification.receiver}
                   >
                     <FaUser className="text-xs md:text-sm" />
                     <span className="hidden md:inline">View Receiver</span>
