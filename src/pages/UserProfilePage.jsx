@@ -15,6 +15,19 @@ const UserProfilePage = () => {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('profile');
   const [isMutualLike, setIsMutualLike] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showImageModal, setShowImageModal] = useState(false);
+  
+  // Debug state changes
+  useEffect(() => {
+    console.log('showImageModal state changed:', showImageModal);
+    console.log('selectedImage state changed:', selectedImage);
+  }, [showImageModal, selectedImage]);
+  
+  // Debug active tab changes
+  useEffect(() => {
+    console.log('activeTab changed:', activeTab);
+  }, [activeTab]);
 
   // Fetch user profile and gallery by ID using services
   useEffect(() => {
@@ -29,6 +42,7 @@ const UserProfilePage = () => {
 
         // Fetch user gallery using service
         const galleryResponse = await userService.getUserGallery(id);
+        console.log('Gallery response:', galleryResponse);
         setGallery(galleryResponse.gallery || []);
         setIsMutualLike(galleryResponse.isMutualLike || profileResponse.isMutualLike || false);
         
@@ -192,6 +206,16 @@ const UserProfilePage = () => {
               <div>
                 <p className="text-xs sm:text-sm text-gray-500">Gender</p>
                 <p className="font-medium text-sm sm:text-base">{profile.gender || 'Not specified'}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+              <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                <span className="text-red-600 text-sm sm:text-base">🎂</span>
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm text-gray-500">Date of Birth</p>
+                <p className="font-medium text-sm sm:text-base">{profile.dob || 'Not specified'}</p>
               </div>
             </div>
             
@@ -406,7 +430,10 @@ const UserProfilePage = () => {
       animate={{ opacity: 1 }}
       className="p-4 sm:p-6 md:p-8"
     >
+      {console.log('Gallery tab rendered')}
       <h2 className="text-xl font-bold text-gray-800 mb-4 sm:mb-6">Photo Gallery</h2>
+      {console.log('Rendering gallery with data:', gallery)}
+      {console.log('isMutualLike status:', isMutualLike)}
       
       {!isMutualLike ? (
         <motion.div
@@ -448,17 +475,36 @@ const UserProfilePage = () => {
                 onError={(e) => {
                   e.target.src = '/default-image.png';
                 }}
+                onContextMenu={(e) => e.preventDefault()}
+                draggable="false"
               />
+              
+              {/* View Photo Button */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 z-20">
+                <button 
+                  onClick={() => {
+                    console.log('View Photo button clicked');
+                    console.log('Photo URL:', photo.url);
+                    console.log('Built image URL:', buildImageSrc(photo.url));
+                    setSelectedImage(buildImageSrc(photo.url));
+                    setShowImageModal(true);
+                  }}
+                  className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-2 rounded-lg font-medium hover:from-red-600 hover:to-orange-600 transition"
+                >
+                  {console.log('Rendering View Photo button for photo:', photo.url)}
+                  View Photo
+                </button>
+              </div>
               
               {/* Profile photo indicator */}
               {photo.isProfile && (
-                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold shadow-lg z-20">
                   Profile Photo
                 </div>
               )}
               
               {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-70 transition-all duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-70 transition-all duration-300 z-10"></div>
             </motion.div>
           ))}
         </motion.div>
@@ -575,7 +621,10 @@ const UserProfilePage = () => {
             </motion.button>
             <motion.button
               whileHover={{ y: -2 }}
-              onClick={() => setActiveTab('gallery')}
+              onClick={() => {
+                console.log('Gallery tab clicked');
+                setActiveTab('gallery');
+              }}
               className={`px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 font-semibold transition-all text-sm sm:text-base relative ${
                 activeTab === 'gallery'
                   ? 'text-red-600'
@@ -595,6 +644,37 @@ const UserProfilePage = () => {
           {/* Tab Content */}
           {activeTab === 'profile' ? renderProfileTab() : renderGalleryTab()}
         </motion.div>
+        
+        {/* Image Modal */}
+        {showImageModal && selectedImage && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+            onClick={() => {
+              console.log('Modal background clicked');
+              setShowImageModal(false);
+            }}
+          >
+            {console.log('Rendering modal with image:', selectedImage)}
+            <div 
+              className="relative max-w-4xl max-h-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition"
+                onClick={() => setShowImageModal(false)}
+              >
+                ×
+              </button>
+              <img 
+                src={selectedImage}
+                alt="Full size view"
+                className="max-w-full max-h-[90vh] object-contain"
+                onContextMenu={(e) => e.preventDefault()}
+                draggable="false"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
