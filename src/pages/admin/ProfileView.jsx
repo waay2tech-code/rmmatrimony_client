@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUser, FaHeart, FaSearch, FaCalendarAlt, FaCrown, FaTimes } from 'react-icons/fa';
+import { FaUser, FaHeart, FaSearch, FaCalendarAlt, FaCrown, FaTimes, FaTrash } from 'react-icons/fa';
 import { notificationService } from '../../services/notificationService';
 import {FaArrowLeft } from "react-icons/fa";
 // We'll create a simplified version of the UserProfilePage component for use in a modal
@@ -292,6 +292,27 @@ const NotificationsListWithProfileTypeFilter = () => {
   const [receiverProfileType, setReceiverProfileType] = useState('all'); // Default to all
 
   const navigate = useNavigate();
+
+  // Function to remove a like
+  const handleRemoveLike = async (senderId, receiverId, notificationId) => {
+    if (!window.confirm('Are you sure you want to remove this like? This will delete the like relationship and the notification.')) {
+      return;
+    }
+    
+    try {
+      const response = await notificationService.removeLike(senderId, receiverId);
+      if (response.success) {
+        // Remove the notification from the list
+        setNotifications(prev => prev.filter(notif => notif._id !== notificationId));
+        alert('Like removed successfully');
+      } else {
+        alert(response.message || 'Failed to remove like');
+      }
+    } catch (error) {
+      console.error('Error removing like:', error);
+      alert('Failed to remove like. Please try again.');
+    }
+  };
 
   useEffect(() => {
     fetchNotifications();
@@ -637,7 +658,7 @@ const NotificationsListWithProfileTypeFilter = () => {
                     <span className="hidden md:inline">View Sender</span>
                     <span className="md:hidden">View</span>
                   </button>
-                  
+                                    
                   <button
                     onClick={() => handleViewProfile(notification.receiver)}
                     className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-4 md:py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap"
@@ -646,6 +667,16 @@ const NotificationsListWithProfileTypeFilter = () => {
                     <FaUser className="text-xs md:text-sm" />
                     <span className="hidden md:inline">View Receiver</span>
                     <span className="md:hidden">View</span>
+                  </button>
+                                    
+                  <button
+                    onClick={() => handleRemoveLike(notification.sender.id, notification.receiver.id, notification._id)}
+                    className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-4 md:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium text-sm md:text-base whitespace-nowrap"
+                    title="Remove Like"
+                  >
+                    <FaTrash className="text-xs md:text-sm" />
+                    <span className="hidden md:inline">Remove Like</span>
+                    <span className="md:hidden">Remove</span>
                   </button>
                 </div>
               </div>

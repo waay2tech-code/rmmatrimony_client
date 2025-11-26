@@ -428,7 +428,12 @@ const UserProfilePage = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="p-4 sm:p-6 md:p-8"
+      className="p-4 sm:p-6 md:p-8 gallery-container"
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }}
     >
       {console.log('Gallery tab rendered')}
       <h2 className="text-xl font-bold text-gray-800 mb-4 sm:mb-6">Photo Gallery</h2>
@@ -457,6 +462,11 @@ const UserProfilePage = () => {
         <motion.div 
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           layout
+          onContextMenu={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }}
         >
           {gallery.map((photo, index) => (
             <motion.div
@@ -471,12 +481,39 @@ const UserProfilePage = () => {
               <img
                 src={buildImageSrc(photo.url)}
                 alt={`Gallery ${index + 1}`}
-                className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 group-hover:scale-110 pointer-events-none select-none no-select no-drag"
                 onError={(e) => {
                   e.target.src = '/default-image.png';
                 }}
-                onContextMenu={(e) => e.preventDefault()}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
                 draggable="false"
+                onClick={(e) => {
+                  // Prevent direct image interaction - users must use the View Photo button
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+                onDragStart={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onKeyDown={(e) => {
+                  // Prevent keyboard shortcuts for saving images
+                  if (e.key === 'PrintScreen' || e.key === 'ScrollLock') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
+                tabIndex="-1"
               />
               
               {/* View Photo Button */}
@@ -514,6 +551,68 @@ const UserProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 py-6 px-4">
+      <style>
+        {`
+          .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+          }
+          .no-drag {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+          }
+          /* Gallery-specific protections */
+          .gallery-container {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: auto;
+          }
+          .gallery-container img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            touch-action: none;
+          }
+          /* Modal image protections */
+          .modal-image-container {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            touch-action: none;
+          }
+          .modal-image-container img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: auto;
+            touch-action: none;
+            -webkit-touch-callout: none;
+          }
+        `}
+      </style>
       <div className="max-w-6xl mx-auto">
         {/* Header with Back Button */}
         <div className="mb-4 sm:mb-6">
@@ -547,10 +646,12 @@ const UserProfilePage = () => {
                   <img
                     src={getProfileImageUrl(profile.profilePhoto, profile.gender, profile.name)}
                     alt={profile.name || 'Profile'}
-                    className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-2xl"
+                    className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-2xl no-select no-drag"
                     onError={(e) => {
                       e.target.src = getDefaultProfileImage(profile.gender, profile.name);
                     }}
+                    onContextMenu={(e) => e.preventDefault()}
+                    draggable="false"
                   />
                   {/* Verification badge */}
                   {profile.isVerified && (
@@ -648,15 +749,20 @@ const UserProfilePage = () => {
         {/* Image Modal */}
         {showImageModal && selectedImage && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4 modal-image-container"
             onClick={() => {
               console.log('Modal background clicked');
               setShowImageModal(false);
             }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }}
           >
             {console.log('Rendering modal with image:', selectedImage)}
             <div 
-              className="relative max-w-4xl max-h-full"
+              className="relative max-w-4xl max-h-full modal-image-container"
               onClick={(e) => e.stopPropagation()}
             >
               <button 
@@ -668,9 +774,66 @@ const UserProfilePage = () => {
               <img 
                 src={selectedImage}
                 alt="Full size view"
-                className="max-w-full max-h-[90vh] object-contain"
-                onContextMenu={(e) => e.preventDefault()}
+                className="max-w-full max-h-[90vh] object-contain select-none no-select no-drag"
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
                 draggable="false"
+                onDoubleClick={(e) => {
+                  // Prevent zooming through double-click
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onMouseDown={(e) => {
+                  // Prevent zooming through mouse wheel + Ctrl
+                  if (e.ctrlKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                  }
+                }}
+                onWheel={(e) => {
+                  // Prevent zooming through pinch gestures or Ctrl+mouse wheel
+                  if (e.ctrlKey || e.nativeEvent.deltaMode === 0) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                  }
+                }}
+                onTouchStart={(e) => {
+                  // Prevent touch-based zooming
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onTouchMove={(e) => {
+                  // Prevent touch-based zooming
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onDragStart={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return false;
+                }}
+                onKeyDown={(e) => {
+                  // Prevent keyboard shortcuts for saving images
+                  if (e.key === 'PrintScreen' || e.key === 'ScrollLock') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                  }
+                }}
+                tabIndex="-1"
               />
             </div>
           </div>

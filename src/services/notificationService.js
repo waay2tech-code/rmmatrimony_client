@@ -23,6 +23,11 @@ export const notificationService = {
     const response = await api.get('/users/admin/notifications');
     return response.data;
   },
+  
+  removeLike: async (senderId, receiverId) => {
+    const response = await api.post('/users/admin/remove-like', { senderId, receiverId });
+    return response.data;
+  },
   // Request browser notification permission
   requestNotificationPermission: async () => {
     if ("Notification" in window && Notification.permission !== "granted") {
