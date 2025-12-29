@@ -228,8 +228,8 @@ export const userService = {
   },
 
   
-   
-
+  
+  
 
 updateUserByAdmin: async (userId, userData) => {
   try {
@@ -244,6 +244,16 @@ updateUserByAdmin: async (userId, userData) => {
 deleteUserByAdmin: async (userId) => {
   try {
     const response = await api.delete(`/users/admindelete/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+},
+
+// Remove profile photo
+removeProfilePhoto: async () => {
+  try {
+    const response = await api.delete('/users/remove-profile-photo');
     return response.data;
   } catch (error) {
     throw error;
@@ -272,7 +282,8 @@ export const {
   deleteNotification,
   getCurrentUser,
   getUserProfileType,
- 
+  removeProfilePhoto // Add the new function to the export
+
 } = userService;
 
 // Default export

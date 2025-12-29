@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+     import React, { useState, useEffect } from 'react';
 import { userService } from "../services/userService";
 import PhotoGallery from "../components/PhotoGallery";
 import { getDefaultProfileImage, getProfileImageUrl } from '../utils/defaultImage';
@@ -263,6 +263,41 @@ const Profile = () => {
     }
   };
 
+  const removeProfilePhoto = async () => {
+    if (!window.confirm("Are you sure you want to remove your profile photo? This will revert to the default profile image.")) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await userService.removeProfilePhoto();
+      console.log("✅ Profile photo removed:", response);
+
+      // Update the UI to show the default image
+      setForm(prev => ({
+        ...prev,
+        profilePhoto: null
+      }));
+      
+      // Clear the preview to trigger the default image
+      if (profilePreview && profilePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(profilePreview);
+      }
+      setProfilePreview(null);
+      
+      setSuccessMessage("Profile photo removed successfully");
+      setTimeout(() => setSuccessMessage(""), 3000);
+      setErrors({});
+    } catch (error) {
+      console.error("❌ Profile photo removal error:", error);
+      setErrors({
+        submit: error.response?.data?.message || "Failed to remove profile photo. Please try again."
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const addPhoto = async () => {
     if (!newPhoto) return;
     
@@ -342,16 +377,27 @@ const Profile = () => {
             <span className="ml-1 text-green-600 font-medium">{memberId}</span>
           </p>
         )}
-        <label className="cursor-pointer bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition inline-block">
-          {profilePreview ? 'Change Profile Photo' : 'Add Profile Photo'}
-          <input 
-            type="file" 
-            accept="image/*" 
-            onChange={handleChange} 
-            name="profilePhoto" 
-            className="hidden"
-          />
-        </label>
+        <div className="flex flex-col sm:flex-row justify-center gap-3 mt-3">
+          <label className="cursor-pointer bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition inline-block">
+            {profilePreview ? 'Change Profile Photo' : 'Add Profile Photo'}
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handleChange} 
+              name="profilePhoto" 
+              className="hidden"
+            />
+          </label>
+          {profilePreview && (
+            <button 
+              onClick={removeProfilePhoto}
+              disabled={isLoading}
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition disabled:opacity-50"
+            >
+              Remove Profile Photo
+            </button>
+          )}
+        </div>
         {errors.profilePhoto && <p className="text-red-500 text-sm mt-2">{errors.profilePhoto}</p>}
       </div>
 
