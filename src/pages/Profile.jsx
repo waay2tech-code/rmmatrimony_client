@@ -110,7 +110,7 @@ const Profile = () => {
           profilePhoto: null,
         });
 
-        // Set profile photo preview
+        // Set profile photo preview - check both profilePhoto and profilePhotoUrl
         console.log("Profile photo from server:", profile.profilePhoto);
         if (profile.profilePhoto) {
           setProfilePreview(profile.profilePhoto);
@@ -220,7 +220,12 @@ const Profile = () => {
     const formData = new FormData();
     Object.entries(form).forEach(([key, value]) => {
       if (value !== null && value !== undefined) {
-        formData.append(key, value);
+        // Only append profilePhoto if it's a File object (not null)
+        if (key === 'profilePhoto' && value instanceof File) {
+          formData.append(key, value);
+        } else if (key !== 'profilePhoto') {
+          formData.append(key, value);
+        }
       }
     });
 
@@ -255,9 +260,16 @@ const Profile = () => {
       setErrors({});
     } catch (error) {
       console.error("❌ Profile update error:", error);
-      setErrors({
-        submit: error.response?.data?.message || "Failed to save profile. Please try again."
-      });
+      // Handle the specific case of file size too large
+      if (error.response?.status === 413 || error.message.includes('Request Entity Too Large')) {
+        setErrors({
+          submit: "File size too large. Please select an image smaller than 5MB."
+        });
+      } else {
+        setErrors({
+          submit: error.response?.data?.message || error.message || "Failed to save profile. Please try again."
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -290,9 +302,26 @@ const Profile = () => {
       setErrors({});
     } catch (error) {
       console.error("❌ Profile photo removal error:", error);
+      // Provide more user-friendly error message
+      const errorMessage = error.response?.data?.message || error.message || "Failed to remove profile photo. Please try again.";
       setErrors({
-        submit: error.response?.data?.message || "Failed to remove profile photo. Please try again."
+        submit: errorMessage
       });
+      
+      // If the error is "No profile photo to remove", we should still update the UI to show the default
+      if (errorMessage.includes("No profile photo to remove")) {
+        // This might happen if there was a mismatch between client and server state
+        // Update UI to show default anyway
+        setForm(prev => ({
+          ...prev,
+          profilePhoto: null
+        }));
+        
+        if (profilePreview && profilePreview.startsWith('blob:')) {
+          URL.revokeObjectURL(profilePreview);
+        }
+        setProfilePreview(null);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -388,7 +417,9 @@ const Profile = () => {
               className="hidden"
             />
           </label>
-          {profilePreview && (
+          {(profilePreview && 
+            !profilePreview.startsWith('data:image/svg') && 
+            !profilePreview.startsWith('data:image')) && (
             <button 
               onClick={removeProfilePhoto}
               disabled={isLoading}

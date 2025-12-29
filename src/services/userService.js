@@ -259,6 +259,32 @@ removeProfilePhoto: async () => {
     throw error;
   }
 },
+
+  // Alternative method to remove profile photo via update
+  updateProfileWithoutPhoto: async (profileData) => {
+    // Ensure profilePhoto is explicitly set to null in the form data
+    const formData = new FormData();
+    Object.entries(profileData).forEach(([key, value]) => {
+      if (key !== 'profilePhoto') {  // Don't add the profile photo if it exists
+        if (value !== null && value !== undefined) {
+          formData.append(key, value);
+        }
+      }
+    });
+    // Explicitly add profilePhoto as null to remove it
+    formData.append('profilePhoto', '');
+    
+    try {
+      const response = await api.put('/users/profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 // Export individual functions for backward compatibility
@@ -282,8 +308,8 @@ export const {
   deleteNotification,
   getCurrentUser,
   getUserProfileType,
-  removeProfilePhoto // Add the new function to the export
-
+  removeProfilePhoto, // Add the new function to the export
+  updateProfileWithoutPhoto // Add the alternative function
 } = userService;
 
 // Default export
