@@ -83,6 +83,17 @@ const Navbar = () => {
             <span>About</span>
           </Link>
 
+          <Link
+            to="/terms"
+            className={`flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+              location.pathname === "/terms"
+                ? "text-red-600 bg-red-50 font-semibold"
+                : "text-gray-700 hover:text-red-600 hover:bg-gray-50"
+            }`}
+          >
+            <span>Terms & Conditions</span>
+          </Link>
+
           <button
             onClick={() => protectedNavigate("/search")}
             className={`flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
@@ -244,6 +255,17 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
+            </Link>
+            <Link
+              to="/terms"
+              className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                location.pathname === "/terms"
+                  ? "text-red-600 bg-red-50 font-semibold"
+                  : "text-gray-700 hover:text-red-600 hover:bg-gray-50"
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Terms & Conditions
             </Link>
             <button
               onClick={() => {

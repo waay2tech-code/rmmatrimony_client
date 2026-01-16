@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import AboutPage from "./pages/AboutPage";
+import TermsAndConditions from "./pages/TermsAndConditions";
 // Admin Pages
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
@@ -89,6 +90,7 @@ const AppContent = () => {
         {/* ✅ Public Routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Admin Auth Routes */}

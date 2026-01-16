@@ -32,6 +32,16 @@ export const userService = {
     }
   },
 
+  // Delete admin user
+  deleteAdminUser: async (userId) => {
+    try {
+      const response = await api.delete(`/users/admindelete-admin/${userId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // Get user profile type (for premium check)
   getProfileType: async () => {
     try {
@@ -291,6 +301,7 @@ removeProfilePhoto: async () => {
 export const {
     updateUserByAdmin,
     deleteUserByAdmin,
+    deleteAdminUser,
     getAllAdminUsers,
   getProfile,
   getProfileType,

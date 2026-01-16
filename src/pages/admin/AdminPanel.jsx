@@ -173,6 +173,26 @@ finally {
     }
   };
 
+  const handleDeleteAdmin = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this admin? This action cannot be undone.")) return;
+
+    try {
+      setLoading(true);
+      setError("");
+
+      await userService.deleteAdminUser(id);
+
+      setSuccessMessage("Admin deleted successfully!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+      await fetchAdmins();
+    } catch (err) {
+      console.error("Admin deletion failed", err);
+      setError(err.response?.data?.message || "Admin deletion failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleGenderSelect = (gender) => {
     setNewUser({ ...newUser, gender });
   };
@@ -744,7 +764,7 @@ finally {
                         <td className="py-3 px-4">{admin.email}</td>
                         <td className="py-3 px-4">
                           <button
-                            onClick={() => alert("Admin deletion is not allowed from this interface")}
+                            onClick={() => handleDeleteAdmin(admin._id)}
                             disabled={loading}
                             className="flex items-center gap-1 text-red-600 hover:text-red-800 disabled:text-red-300 text-sm font-medium"
                           >

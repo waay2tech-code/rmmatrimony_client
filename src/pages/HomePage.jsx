@@ -466,6 +466,7 @@ const HomePage = () => {
                 <li><button onClick={() => navigate("/")} className="text-gray-400 hover:text-white transition">Home</button></li>
                 <li><button onClick={() => navigate("/about")} className="text-gray-400 hover:text-white transition">About Us</button></li>
                 <li><button onClick={() => navigate("/search")} className="text-gray-400 hover:text-white transition">Search Profiles</button></li>
+                <li><button onClick={() => navigate("/terms & conditions")} className="text-gray-400 hover:text-white transition">Terms & Conditions</button></li>
                 <li><button onClick={() => setShowContactForm(true)} className="text-gray-400 hover:text-white transition">Contact Us</button></li>
               </ul>
             </div>
