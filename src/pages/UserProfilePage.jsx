@@ -219,7 +219,7 @@ const UserProfilePage = () => {
               </div>
             </div>
             
-            <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
+            {/* <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
               <div className="bg-red-100 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
                 <FaPhone className="text-red-600 text-sm sm:text-base" />
               </div>
@@ -229,7 +229,7 @@ const UserProfilePage = () => {
                   {isMutualLike ? profile.mobile : 'Hidden - Like this profile to view'}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {profile.memberid && (
               <div className="flex items-center p-2 sm:p-3 rounded-lg hover:bg-red-50 transition">
