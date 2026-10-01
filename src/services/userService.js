@@ -128,6 +128,17 @@ export const userService = {
     }
   },
 
+  // Admin dashboard summary stats (admins only)
+  getAdminAnalytics: async () => {
+    try {
+      const response = await api.get('/users/admin/analytics');
+      return response.data;
+    } catch (error) {
+      console.error("❌ Analytics API error:", error);
+      throw error;
+    }
+  },
+
   // Like/unlike a profile
   toggleLike: async (profileId) => {
     try {
@@ -314,6 +325,7 @@ export const {
   updateProfile,
   getMatches,
   getAllUsers,
+  getAdminAnalytics,
   toggleLike,
   uploadPhoto,
   deletePhoto,

@@ -7,6 +7,7 @@ import { userService } from "../services/userService";
 import { actionService } from "../services/actionService";
 import PremiumUpgradeModal from "../components/PremiumUpgradeModal";
 import { getDefaultProfileImage, getProfileImageUrl } from '../utils/defaultImage';
+import NewBadge from '../components/NewBadge';
 
 const SearchPage = () => {
   const [filters, setFilters] = useState({
@@ -361,6 +362,11 @@ const SearchPage = () => {
                       {/* Match Percentage Badge */}
                       <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                         {Math.floor(Math.random() * 20) + 80}% Match
+                      </div>
+
+                      {/* NEW badge - shown for 24h after registration */}
+                      <div className="absolute top-14 left-4">
+                        <NewBadge createdAt={profile.createdAt} />
                       </div>
 
                       {/* Badges */}

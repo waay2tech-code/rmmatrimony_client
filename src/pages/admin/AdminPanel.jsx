@@ -7,6 +7,26 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import FadeIn from "../../components/FadeIn";
 
+const STAT_TONES = {
+  red: { wrap: "bg-red-50 border-red-100", icon: "bg-red-100 text-red-600" },
+  green: { wrap: "bg-green-50 border-green-100", icon: "bg-green-100 text-green-600" },
+  blue: { wrap: "bg-blue-50 border-blue-100", icon: "bg-blue-100 text-blue-600" },
+};
+
+const StatCard = ({ label, value, icon, tone = "red", testId }) => {
+  const t = STAT_TONES[tone] || STAT_TONES.red;
+  return (
+    <div data-testid={testId} className={`rounded-xl border p-5 ${t.wrap}`}>
+      <div className="flex items-center gap-3">
+        <div className={`p-2 rounded-lg ${t.icon}`}>{icon}</div>
+        <p className="text-sm font-medium text-gray-600">{label}</p>
+      </div>
+      <p className="text-3xl font-bold text-gray-800 mt-4">
+        {value === undefined || value === null ? "—" : value}
+      </p>
+    </div>
+  );
+};
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -17,6 +37,10 @@ const AdminPanel = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [activeTab, setActiveTab] = useState("users"); // "users" or "admins"
+
+  // Dashboard analytics (read-only summary stats)
+  const [analytics, setAnalytics] = useState(null);
+  const [analyticsError, setAnalyticsError] = useState("");
   
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +62,7 @@ const AdminPanel = () => {
   useEffect(() => {
     fetchUsers();
     fetchAdmins();
+    fetchAnalytics();
   }, []);
 
   const fetchUsers = async () => {
@@ -65,6 +90,19 @@ const AdminPanel = () => {
       setError("Failed to fetch admins. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Read-only dashboard stats. Failures here must never block the
+  // user-management table, so this swallows its own error.
+  const fetchAnalytics = async () => {
+    try {
+      const data = await userService.getAdminAnalytics();
+      setAnalytics(data);
+      setAnalyticsError("");
+    } catch (err) {
+      console.error("Failed to fetch analytics", err);
+      setAnalyticsError("Analytics unavailable");
     }
   };
 
@@ -333,6 +371,50 @@ finally {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Analytics Summary - read-only stats */}
+      <div
+        className="bg-white rounded-2xl shadow-lg p-6 mb-8"
+        data-testid="admin-analytics"
+      >
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-gray-800">Analytics Summary</h2>
+          <button
+            onClick={fetchAnalytics}
+            className="text-sm text-red-600 hover:text-red-700 font-medium"
+          >
+            Refresh
+          </button>
+        </div>
+
+        {analyticsError ? (
+          <p className="text-sm text-gray-500">{analyticsError}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <StatCard
+              label="Total Registered Users"
+              value={analytics?.totalUsers}
+              icon={<FaUsers />}
+              tone="red"
+              testId="stat-total-users"
+            />
+            <StatCard
+              label="Today's New Registrations"
+              value={analytics?.todayRegistrations}
+              icon={<FaUserPlus />}
+              tone="green"
+              testId="stat-today-registrations"
+            />
+            <StatCard
+              label="Active Users"
+              value={analytics?.activeUsers}
+              icon={<FaUserShield />}
+              tone="blue"
+              testId="stat-active-users"
+            />
+          </div>
+        )}
       </div>
 
       {/* Alerts */}

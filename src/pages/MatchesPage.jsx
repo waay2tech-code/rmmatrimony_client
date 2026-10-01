@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import { userService } from '../services/userService';
 import PremiumUpgradeModal from '../components/PremiumUpgradeModal';
 import { getProfileImageUrl, getDefaultProfileImage } from '../utils/defaultImage';
+import NewBadge from '../components/NewBadge';
 
 const MatchesPage = () => {
   const { user } = useContext(AuthContext); // Removed token since we're using cookies
@@ -262,6 +263,11 @@ const MatchesPage = () => {
                     {/* Match Percentage Badge */}
                     <div className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                       {match.matchPercentage || Math.floor(Math.random() * 20) + 80}% Match
+                    </div>
+
+                    {/* NEW badge - shown for 24h after registration */}
+                    <div className="absolute top-14 left-4">
+                      <NewBadge createdAt={match.createdAt} />
                     </div>
 
                     {/* Badges */}
